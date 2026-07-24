@@ -32,10 +32,12 @@ if DESKTOP:
     # Budgie before GNOME: Budgie sets XDG_CURRENT_DESKTOP=budgie:GNOME
     elif 'budgie' in _desktop_lower:
         DESKTOP = 'BUDGIE'
+    elif _desktop_lower == 'sway':
+        DESKTOP = 'SWAY'
     elif 'gnome' in _desktop_lower:
         DESKTOP = 'GNOME'
 
-WLROOTS_DESKTOPS = ('BUDGIE',)
+WLROOTS_DESKTOPS = ('BUDGIE', 'SWAY')
 
 CONFIG_DIR = os.path.join(XDG_CONFIG_HOME, "autokey")
 RUN_DIR = os.path.join(os.environ.get('XDG_RUNTIME_DIR', XDG_CACHE_HOME), "autokey")

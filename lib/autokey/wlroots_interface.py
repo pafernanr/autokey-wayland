@@ -1,3 +1,5 @@
+import json
+import subprocess
 import threading
 
 import gi
@@ -229,6 +231,30 @@ class WlrootsWindowInterface(AbstractWindowInterface):
             'id': None, 'pid': None, 'workspace': None,
             'desktop': None, 'in_current_workspace': False,
         }
+
+
+class SwayMouseInterface:
+
+    def __init__(self):
+        pass
+
+    def mouse_location(self):
+        try:
+            proc = subprocess.run(
+                ['swaymsg', '-t', 'get_seats', '--raw'],
+                capture_output=True, text=True, timeout=2
+            )
+            seats = json.loads(proc.stdout)
+            for seat in seats:
+                if seat.get('focus'):
+                    cursor = seat.get('cursor', {})
+                    return [int(cursor.get('x', 0)), int(cursor.get('y', 0))]
+            if seats:
+                cursor = seats[0].get('cursor', {})
+                return [int(cursor.get('x', 0)), int(cursor.get('y', 0))]
+        except Exception as e:
+            logger.error(f"Failed to get mouse location from swaymsg: {e}")
+        return [0, 0]
 
 
 class FallbackMouseInterface:
