@@ -29,10 +29,11 @@ if DESKTOP:
     _desktop_lower = DESKTOP.lower()
     if _desktop_lower in ('kde', 'plasma'):
         DESKTOP = 'KDE'
-    elif 'gnome' in _desktop_lower and 'budgie' not in _desktop_lower:
-        DESKTOP = 'GNOME'
+    # Budgie before GNOME: Budgie sets XDG_CURRENT_DESKTOP=budgie:GNOME
     elif 'budgie' in _desktop_lower:
         DESKTOP = 'BUDGIE'
+    elif 'gnome' in _desktop_lower:
+        DESKTOP = 'GNOME'
 
 WLROOTS_DESKTOPS = ('BUDGIE',)
 
