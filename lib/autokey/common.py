@@ -25,8 +25,16 @@ XDG_CACHE_HOME = os.environ.get('XDG_CACHE_HOME', os.path.expanduser('~/.cache')
 XDG_DATA_HOME = os.environ.get('XDG_DATA_HOME', os.path.expanduser("~/.local/share"))
 SESSION_TYPE = os.environ.get("XDG_SESSION_TYPE")
 DESKTOP = os.environ.get('XDG_CURRENT_DESKTOP')
-if DESKTOP and DESKTOP.lower() in ('kde', 'plasma'):
-    DESKTOP = 'KDE'
+if DESKTOP:
+    _desktop_lower = DESKTOP.lower()
+    if _desktop_lower in ('kde', 'plasma'):
+        DESKTOP = 'KDE'
+    elif 'gnome' in _desktop_lower and 'budgie' not in _desktop_lower:
+        DESKTOP = 'GNOME'
+    elif 'budgie' in _desktop_lower:
+        DESKTOP = 'BUDGIE'
+
+WLROOTS_DESKTOPS = ('BUDGIE',)
 
 CONFIG_DIR = os.path.join(XDG_CONFIG_HOME, "autokey")
 RUN_DIR = os.path.join(os.environ.get('XDG_RUNTIME_DIR', XDG_CACHE_HOME), "autokey")
