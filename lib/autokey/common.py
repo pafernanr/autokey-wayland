@@ -32,7 +32,7 @@ if DESKTOP:
     # Budgie before GNOME: Budgie sets XDG_CURRENT_DESKTOP=budgie:GNOME
     elif 'budgie' in _desktop_lower:
         DESKTOP = 'BUDGIE'
-    elif _desktop_lower == 'sway':
+    elif 'sway' in _desktop_lower:
         DESKTOP = 'SWAY'
     elif 'gnome' in _desktop_lower:
         DESKTOP = 'GNOME'

@@ -61,7 +61,7 @@ def waylandChecks():
     #  Budgie sets GNOME_DESKTOP_SESSION_ID but doesn't use GNOME Shell extensions
     is_gnome = session_desktop == 'gnome' or (
         'GNOME_DESKTOP_SESSION_ID' in os.environ
-        and session_desktop not in ('budgie', 'budgie-desktop')
+        and session_desktop not in ('budgie', 'budgie-desktop', 'sway')
     )
     if is_gnome:
         ext_id = 'autokey-gnome-extension@autokey'
