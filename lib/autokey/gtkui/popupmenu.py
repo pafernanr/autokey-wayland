@@ -105,8 +105,7 @@ class PopupMenu(Gtk.Menu):
             return desc
 
     def show_on_desktop(self):
-        is_wayland = 'Wayland' in type(Gdk.Display.get_default()).__name__
-        if HAS_LAYER_SHELL and is_wayland:
+        if HAS_LAYER_SHELL and GtkLayerShell.is_supported():
             GLib.idle_add(self._show_with_layer_shell)
         else:
             Gdk.threads_enter()
