@@ -237,7 +237,7 @@ class FallbackMouseInterface:
         pass
 
     def mouse_location(self):
-        raise NotImplementedError(
-            "Cursor position query is not available on this Wayland compositor. "
-            "This feature requires compositor-specific IPC (e.g. Sway)."
-        )
+        # labwc doesn't expose cursor position through any IPC protocol.
+        # Wayland by design prevents clients from querying global pointer state.
+        # Compositors with IPC (e.g. Sway) can override this with actual values.
+        return (0, 0)

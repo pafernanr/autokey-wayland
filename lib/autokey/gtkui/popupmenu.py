@@ -117,11 +117,7 @@ class PopupMenu(Gtk.Menu):
         try:
             x, y = self.service.mediator.interface.mouse_location()
         except Exception:
-            try:
-                sw, sh = self.service.mediator.windowInterface.get_screen_size()
-                x, y = sw // 2, sh // 2
-            except Exception:
-                x, y = 960, 540
+            x, y = 0, 0
 
         self._popup_window = Gtk.Window()
         GtkLayerShell.init_for_window(self._popup_window)
