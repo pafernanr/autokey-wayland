@@ -54,6 +54,8 @@ import autokey.configmanager.configmanager as cm
 import autokey.configmanager.configmanager_constants as cm_constants
 if common.DESKTOP == 'KDE':
     from autokey.kde_interface import KdeMouseInterface as MouseReadInterface
+elif common.DESKTOP == 'SWAY':
+    from autokey.wlroots_interface import SwayMouseInterface as MouseReadInterface
 elif common.DESKTOP in common.WLROOTS_DESKTOPS:
     from autokey.wlroots_interface import FallbackMouseInterface as MouseReadInterface
 else:

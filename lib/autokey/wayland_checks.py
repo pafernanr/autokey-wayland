@@ -41,7 +41,7 @@ def waylandChecks():
         #  Check that we're running on a supported desktop environment
         session_desktop = os.environ.get('XDG_SESSION_DESKTOP', '').lower()
         supported = (
-            session_desktop in ('gnome', 'kde', 'budgie', 'budgie-desktop')
+            session_desktop in ('gnome', 'kde', 'sway', 'budgie', 'budgie-desktop')
             or 'GNOME_DESKTOP_SESSION_ID' in os.environ
         )
         if supported:
@@ -61,7 +61,7 @@ def waylandChecks():
     #  Budgie sets GNOME_DESKTOP_SESSION_ID but doesn't use GNOME Shell extensions
     is_gnome = session_desktop == 'gnome' or (
         'GNOME_DESKTOP_SESSION_ID' in os.environ
-        and session_desktop not in ('budgie', 'budgie-desktop')
+        and session_desktop not in ('budgie', 'budgie-desktop', 'sway')
     )
     if is_gnome:
         ext_id = 'autokey-gnome-extension@autokey'
@@ -98,7 +98,7 @@ def waylandChecks():
         title = 'AutoKey System Configuration Needed'
         if session_desktop == 'kde':
             message = f'Your user id is not configured to run AutoKey under Wayland.  If this is your <b>first time</b> running AutoKey, try <b>rebooting</b> your system and starting AutoKey again.  Otherwise, try entering this two command, then rebooting:<br /><br />sudo usermod -a -G "{group}" "{user}"'
-        elif session_desktop in ('budgie', 'budgie-desktop'):
+        elif session_desktop in ('sway', 'budgie', 'budgie-desktop'):
             message = f'Your user id is not configured to run AutoKey under Wayland.  If this is your <b>first time</b> running AutoKey, try <b>rebooting</b> your system and starting AutoKey again.  Otherwise, try entering this command, then rebooting:<br /><br />sudo usermod -a -G "{group}" "{user}"'
         else:
             message = f'Your user id is not configured to run AutoKey under Wayland.  If this is your <b>first time</b> running AutoKey, try <b>rebooting</b> your system and starting AutoKey again.  Otherwise, try entering these two commands, then rebooting:<br /><br />sudo usermod -a -G "{group}" "{user}"<br /><br />gnome-extensions install --force /usr/share/autokey/gnome-shell-extension/autokey-gnome-extension@autokey.shell-extension.zip'
