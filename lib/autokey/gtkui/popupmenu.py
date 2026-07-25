@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import time
-from gi.repository import Gtk, Gdk
+from gi.repository import Gtk, Gdk, GLib
 
 try:
     import gi
@@ -105,13 +105,14 @@ class PopupMenu(Gtk.Menu):
             return desc
 
     def show_on_desktop(self):
-        Gdk.threads_enter()
-        time.sleep(0.2)
-        if HAS_LAYER_SHELL and not Gdk.Display.get_default().get_name().startswith('x11'):
-            self._show_with_layer_shell()
+        is_wayland = 'Wayland' in type(Gdk.Display.get_default()).__name__
+        if HAS_LAYER_SHELL and is_wayland:
+            GLib.idle_add(self._show_with_layer_shell)
         else:
+            Gdk.threads_enter()
+            time.sleep(0.2)
             self._show_with_x11()
-        Gdk.threads_leave()
+            Gdk.threads_leave()
 
     def _show_with_layer_shell(self):
         try:
@@ -136,6 +137,7 @@ class PopupMenu(Gtk.Menu):
         self.show_all()
         self.popup_at_widget(self._popup_window, Gdk.Gravity.NORTH_WEST, Gdk.Gravity.NORTH_WEST, None)
         self.connect("deactivate", self._on_deactivate)
+        return False
 
     def _show_with_x11(self):
         def position_popup(menu, x, y, user_data):
