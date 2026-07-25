@@ -32,6 +32,7 @@ Requires:	ImageMagick
 Recommends:	gnome-extensions-app
 Recommends:	wmctrl
 Recommends:	xautomation
+Recommends:	gtk-layer-shell
 Recommends:	wl-clipboard
 Recommends:	libxfce4windowing
 Provides:	autokey = %{version}-%{release}
